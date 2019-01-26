@@ -3,15 +3,15 @@ package br.com.peixeurbano.store.repository;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-import br.com.peixeurbano.store.model.BuyOption;
+import br.com.peixeurbano.store.model.Purchase;
 
 /**
- * BuyOption Repository
+ * Purchase Repository
  * 
  * @author Ryan Padilha <ryan.padilha@peixeurbano.com>
  * @since 0.1
  *
  */
-public interface BuyOptionRepository extends MongoRepository<BuyOption, ObjectId> {
+public interface PurchaseRepository extends MongoRepository<Purchase, ObjectId> {
 
 }

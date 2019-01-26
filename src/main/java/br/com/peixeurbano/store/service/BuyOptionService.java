@@ -19,9 +19,13 @@ public interface BuyOptionService {
 
 	Collection<BuyOption> list(Sort sort);
 
+	BuyOption findById(ObjectId id);
+
 	BuyOption persist(BuyOption buyOption) throws UniqueConstraintException;
 
 	BuyOption update(ObjectId id, BuyOption buyOption) throws UniqueConstraintException;
+
+	BuyOption decrementQuantityCupom(ObjectId id, Long quantity);
 
 	void delete(ObjectId id);
 

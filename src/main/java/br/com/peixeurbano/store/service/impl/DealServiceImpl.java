@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import br.com.peixeurbano.store.config.ResourceMessage;
 import br.com.peixeurbano.store.exceptions.UniqueConstraintException;
 import br.com.peixeurbano.store.model.Deal;
 import br.com.peixeurbano.store.repository.DealRepository;
@@ -27,8 +26,8 @@ public class DealServiceImpl implements DealService {
 	@Autowired
 	private DealRepository repository;
 
-	@Autowired
-	private ResourceMessage message;
+//	@Autowired
+//	private ResourceMessage message;
 
 	@Override
 	public Collection<Deal> list(Sort sort) {
@@ -63,6 +62,18 @@ public class DealServiceImpl implements DealService {
 	@Override
 	public void validateConstraints(Deal deal) throws UniqueConstraintException {
 
+	}
+
+	@Override
+	public Deal incrementTotalSold(ObjectId id, Long quantity) {
+		Deal entity = null;
+		final Deal persisted = this.findById(id);
+		if (null != persisted) {
+			persisted.setTotalSold(persisted.getTotalSold() + quantity);
+			entity = repository.save(persisted);
+		}
+
+		return entity;
 	}
 
 }

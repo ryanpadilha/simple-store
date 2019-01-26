@@ -1,13 +1,13 @@
 package br.com.peixeurbano.store.service.impl;
 
 import java.util.Collection;
+import java.util.Optional;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import br.com.peixeurbano.store.config.ResourceMessage;
 import br.com.peixeurbano.store.exceptions.UniqueConstraintException;
 import br.com.peixeurbano.store.model.BuyOption;
 import br.com.peixeurbano.store.repository.BuyOptionRepository;
@@ -26,12 +26,22 @@ public class BuyOptionServiceImpl implements BuyOptionService {
 	@Autowired
 	private BuyOptionRepository repository;
 
-	@Autowired
-	private ResourceMessage message;
+//	@Autowired
+//	private ResourceMessage message;
 
 	@Override
 	public Collection<BuyOption> list(Sort sort) {
 		return repository.findAll(sort);
+	}
+
+	@Override
+	public BuyOption findById(ObjectId id) {
+		Optional<BuyOption> persisted = repository.findById(id);
+
+		if (!persisted.isPresent())
+			return null;
+
+		return persisted.get();
 	}
 
 	@Override
@@ -52,6 +62,20 @@ public class BuyOptionServiceImpl implements BuyOptionService {
 	@Override
 	public void validateConstraints(BuyOption buyOption) throws UniqueConstraintException {
 
+	}
+
+	@Override
+	public BuyOption decrementQuantityCupom(ObjectId id, Long quantity) {
+		BuyOption bopt = null;
+		final BuyOption persisted = this.findById(id);
+		if (null != persisted) {
+			if (persisted.getQuantityCupom() > 0 && persisted.getQuantityCupom() >= quantity) {
+				persisted.setQuantityCupom(persisted.getQuantityCupom() - quantity);
+				bopt = repository.save(persisted);
+			}
+		}
+
+		return bopt;
 	}
 
 }

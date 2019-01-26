@@ -1,19 +1,21 @@
 package br.com.peixeurbano.store.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 
 import br.com.peixeurbano.store.commons.DealType;
 
@@ -56,16 +58,17 @@ public class Deal implements Serializable {
 	private String url;
 
 	@NotNull
-	private long totalSold = 0;
+	private Long totalSold = 0L;
 
 	@NotNull
 	private DealType type;
 
-	@DBRef
-	private List<BuyOption> buyOptions;
+//	@DBRef
+	private Collection<BuyOption> buyOptions;
 
-	public String getId() {
-		return id.toHexString();
+	@JsonSerialize(using = ToStringSerializer.class)
+	public ObjectId getId() {
+		return id;
 	}
 
 	public void setId(ObjectId id) {
@@ -120,11 +123,11 @@ public class Deal implements Serializable {
 		this.url = url;
 	}
 
-	public long getTotalSold() {
+	public Long getTotalSold() {
 		return totalSold;
 	}
 
-	public void setTotalSold(long totalSold) {
+	public void setTotalSold(Long totalSold) {
 		this.totalSold = totalSold;
 	}
 
@@ -136,26 +139,35 @@ public class Deal implements Serializable {
 		this.type = type;
 	}
 
-	public List<BuyOption> getBuyOptions() {
+	public Collection<BuyOption> getBuyOptions() {
 		return buyOptions;
 	}
 
-	public void setBuyOptions(List<BuyOption> buyOptions) {
+	public void setBuyOptions(Collection<BuyOption> buyOptions) {
 		this.buyOptions = buyOptions;
+	}
+
+	public boolean addBuyOption(BuyOption element) {
+		if (this.buyOptions == null) {
+			this.buyOptions = new ArrayList<>(); // CollectionUtils.emptyCollection();
+		}
+
+		return this.buyOptions.add(element);
+	}
+
+	public boolean removeBuyOption(BuyOption element) {
+		if (this.buyOptions == null) {
+			this.buyOptions = new ArrayList<>(); // CollectionUtils.emptyCollection();
+		}
+
+		return this.buyOptions.remove(element);
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((createDate == null) ? 0 : createDate.hashCode());
-		result = prime * result + ((endDate == null) ? 0 : endDate.hashCode());
-		result = prime * result + ((publishDate == null) ? 0 : publishDate.hashCode());
-		result = prime * result + ((text == null) ? 0 : text.hashCode());
-		result = prime * result + ((title == null) ? 0 : title.hashCode());
-		result = prime * result + (int) (totalSold ^ (totalSold >>> 32));
-		result = prime * result + ((type == null) ? 0 : type.hashCode());
-		result = prime * result + ((url == null) ? 0 : url.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
 
@@ -168,39 +180,10 @@ public class Deal implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Deal other = (Deal) obj;
-		if (createDate == null) {
-			if (other.createDate != null)
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!createDate.equals(other.createDate))
-			return false;
-		if (endDate == null) {
-			if (other.endDate != null)
-				return false;
-		} else if (!endDate.equals(other.endDate))
-			return false;
-		if (publishDate == null) {
-			if (other.publishDate != null)
-				return false;
-		} else if (!publishDate.equals(other.publishDate))
-			return false;
-		if (text == null) {
-			if (other.text != null)
-				return false;
-		} else if (!text.equals(other.text))
-			return false;
-		if (title == null) {
-			if (other.title != null)
-				return false;
-		} else if (!title.equals(other.title))
-			return false;
-		if (totalSold != other.totalSold)
-			return false;
-		if (type != other.type)
-			return false;
-		if (url == null) {
-			if (other.url != null)
-				return false;
-		} else if (!url.equals(other.url))
+		} else if (!id.equals(other.id))
 			return false;
 		return true;
 	}

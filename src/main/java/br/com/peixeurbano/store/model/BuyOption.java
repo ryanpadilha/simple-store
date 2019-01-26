@@ -10,6 +10,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 
 /**
  * BuyOptions Model
@@ -50,8 +52,9 @@ public class BuyOption implements Serializable {
 //	@JsonSerialize(using = CustomDateTimeSerializer.class)
 	private Date endDate;
 
-	public String getId() {
-		return id.toHexString();
+	@JsonSerialize(using = ToStringSerializer.class)
+	public ObjectId getId() {
+		return id;
 	}
 
 	public void setId(ObjectId id) {
@@ -118,13 +121,7 @@ public class BuyOption implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((QuantityCupom == null) ? 0 : QuantityCupom.hashCode());
-		result = prime * result + ((endDate == null) ? 0 : endDate.hashCode());
-		result = prime * result + ((normalPrice == null) ? 0 : normalPrice.hashCode());
-		result = prime * result + ((percentageDiscount == null) ? 0 : percentageDiscount.hashCode());
-		result = prime * result + ((salePrice == null) ? 0 : salePrice.hashCode());
-		result = prime * result + ((startDate == null) ? 0 : startDate.hashCode());
-		result = prime * result + ((title == null) ? 0 : title.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
 
@@ -137,40 +134,10 @@ public class BuyOption implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		BuyOption other = (BuyOption) obj;
-		if (QuantityCupom == null) {
-			if (other.QuantityCupom != null)
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!QuantityCupom.equals(other.QuantityCupom))
-			return false;
-		if (endDate == null) {
-			if (other.endDate != null)
-				return false;
-		} else if (!endDate.equals(other.endDate))
-			return false;
-		if (normalPrice == null) {
-			if (other.normalPrice != null)
-				return false;
-		} else if (!normalPrice.equals(other.normalPrice))
-			return false;
-		if (percentageDiscount == null) {
-			if (other.percentageDiscount != null)
-				return false;
-		} else if (!percentageDiscount.equals(other.percentageDiscount))
-			return false;
-		if (salePrice == null) {
-			if (other.salePrice != null)
-				return false;
-		} else if (!salePrice.equals(other.salePrice))
-			return false;
-		if (startDate == null) {
-			if (other.startDate != null)
-				return false;
-		} else if (!startDate.equals(other.startDate))
-			return false;
-		if (title == null) {
-			if (other.title != null)
-				return false;
-		} else if (!title.equals(other.title))
+		} else if (!id.equals(other.id))
 			return false;
 		return true;
 	}

@@ -25,6 +25,8 @@ public interface DealService {
 
 	Deal update(ObjectId id, Deal deal) throws UniqueConstraintException;
 
+	Deal incrementTotalSold(ObjectId id, Long quantity);
+
 	void delete(ObjectId id);
 
 	void validateConstraints(Deal deal) throws UniqueConstraintException;

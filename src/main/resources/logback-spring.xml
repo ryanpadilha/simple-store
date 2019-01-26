@@ -37,7 +37,7 @@
 		<appender-ref ref="File-Appender" />
 	</logger>
 
-	<logger name="br.com.sapiensx.atlas" level="DEBUG" additivity="false">
+	<logger name="br.com.peixeurbano.store" level="DEBUG" additivity="false">
 		<appender-ref ref="Console-Appender" />
 		<appender-ref ref="File-Appender" />
 	</logger>
