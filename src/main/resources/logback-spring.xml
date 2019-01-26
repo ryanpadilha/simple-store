@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<property name="LOG_PATH" value="/var/peixeurbano/logs/simple-store" />
+	<property name="LOG_ARCHIVE" value="${LOG_PATH}/archive" />
+
+	<timestamp key="timestamp-by-second" datePattern="yyyyMMdd'T'HHmmss" />
+	<statusListener class="ch.qos.logback.core.status.NopStatusListener" />
+
+	<appender name="Console-Appender" class="ch.qos.logback.core.ConsoleAppender">
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n
+			</pattern>
+		</layout>
+	</appender>
+
+	<appender name="File-Appender"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_PATH}/simple-store.log</file>
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n
+			</pattern>
+			<outputPatternAsHeader>true</outputPatternAsHeader>
+		</encoder>
+
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>
+				${LOG_PATH}/simple-store.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>20MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+	</appender>
+
+	<logger name="org.springframework.jdbc" level="WARN" additivity="false">
+		<appender-ref ref="Console-Appender" />
+		<appender-ref ref="File-Appender" />
+	</logger>
+
+	<logger name="br.com.sapiensx.atlas" level="DEBUG" additivity="false">
+		<appender-ref ref="Console-Appender" />
+		<appender-ref ref="File-Appender" />
+	</logger>
+
+	<root level="ERROR">
+		<appender-ref ref="Console-Appender" />
+		<appender-ref ref="File-Appender" />
+	</root>
+</configuration>
