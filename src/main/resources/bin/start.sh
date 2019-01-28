@@ -8,11 +8,11 @@ else
   ENV=$1
 fi
 
-APPAWSPATH="/var/peixeurbano/apps/simple-store"
+APPAWSPATH="/var/named/www/sapiensx.com.br/bin/app/simple-store"
 
 echo "starting simple-store application..."
 
-java -Xms64m -Xmx128m -Dlogging.config=$APPAWSPATH/config/logback-spring.xml -Dspring.config.location=$APPAWSPATH/config/application-$ENV.properties -jar $APPAWSPATH/lib/simple-store.jar &
+java -Xms64m -Xmx128m -Dlogging.config=$APPAWSPATH/config/logback-spring.xml -Dspring.config.location=$APPAWSPATH/config/application.properties -jar $APPAWSPATH/lib/simple-store.jar &
 echo $! > /var/run/simple-store.pid
 echo "simple-store started."
 
