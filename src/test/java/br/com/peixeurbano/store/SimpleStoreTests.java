@@ -1,6 +1,7 @@
 package br.com.peixeurbano.store;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Date;
 
@@ -142,6 +143,7 @@ public class SimpleStoreTests {
 
 			Purchase persistPurchase = purchaseService.persist(purchase);
 			assertFalse(persistPurchase.getId().toHexString().isEmpty());
+			assertTrue(persistPurchase.getQuantity() == 10L);
 
 		} catch (UniqueConstraintException e) {
 			e.printStackTrace();

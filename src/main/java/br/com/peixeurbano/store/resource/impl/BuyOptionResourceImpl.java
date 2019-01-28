@@ -1,6 +1,7 @@
 package br.com.peixeurbano.store.resource.impl;
 
 import java.util.Collection;
+import java.util.Date;
 
 import javax.validation.Valid;
 
@@ -67,6 +68,12 @@ public class BuyOptionResourceImpl implements GenericResource<BuyOption> {
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
 	public void delete(@PathVariable("id") ObjectId id) {
 		service.delete(id);
+	}
+
+	@RequestMapping(value = "/all-available", method = RequestMethod.GET)
+	public Collection<BuyOption> listAllAvailable() {
+		final Date currentDate = new Date();
+		return service.findAllAvailable(currentDate, currentDate);
 	}
 
 }

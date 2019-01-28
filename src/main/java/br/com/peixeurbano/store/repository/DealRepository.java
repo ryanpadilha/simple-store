@@ -1,5 +1,8 @@
 package br.com.peixeurbano.store.repository;
 
+import java.util.Collection;
+import java.util.Date;
+
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
@@ -14,4 +17,7 @@ import br.com.peixeurbano.store.model.Deal;
  */
 public interface DealRepository extends MongoRepository<Deal, ObjectId> {
 
+	Deal findByUrl(String url);
+
+	Collection<Deal> findAllByPublishDateLessThanEqualAndEndDateGreaterThanEqual(Date start, Date end);
 }

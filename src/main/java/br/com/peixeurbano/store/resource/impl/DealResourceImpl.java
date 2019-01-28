@@ -1,6 +1,7 @@
 package br.com.peixeurbano.store.resource.impl;
 
 import java.util.Collection;
+import java.util.Date;
 
 import javax.validation.Valid;
 
@@ -67,6 +68,17 @@ public class DealResourceImpl implements GenericResource<Deal> {
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
 	public void delete(@PathVariable("id") ObjectId id) {
 		service.delete(id);
+	}
+
+	@RequestMapping(value = "/slug/{url}", method = RequestMethod.GET)
+	public Deal getByUrl(@PathVariable("url") String url) throws NotFoundEntityException {
+		return service.findByUrl(url);
+	}
+
+	@RequestMapping(value = "/all-available", method = RequestMethod.GET)
+	public Collection<Deal> listAllAvailable() {
+		final Date currentDate = new Date();
+		return service.findAllAvailable(currentDate, currentDate);
 	}
 
 }

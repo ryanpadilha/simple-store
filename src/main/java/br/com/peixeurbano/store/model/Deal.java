@@ -9,11 +9,14 @@ import javax.validation.constraints.NotNull;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 
@@ -22,8 +25,9 @@ import br.com.peixeurbano.store.commons.DealType;
 /**
  * Deal Model
  * 
- * @author ryanpadilha
+ * @author Ryan Padilha <ryan.padilha@peixeurbano.com>
  * @version 0.1
+ * 
  */
 @Document(collection = "deal")
 public class Deal implements Serializable {
@@ -45,12 +49,10 @@ public class Deal implements Serializable {
 
 	@NotNull
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd") // yyyy-MM-dd@HH:mm:ss.SSSZ
-//	@JsonSerialize(using = CustomDateTimeSerializer.class)
 	private Date publishDate;
 
 	@NotNull
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-//	@JsonSerialize(using = CustomDateTimeSerializer.class)
 	private Date endDate;
 
 	@NotNull
@@ -63,8 +65,11 @@ public class Deal implements Serializable {
 	@NotNull
 	private DealType type;
 
-//	@DBRef
-	private Collection<BuyOption> buyOptions;
+	private Collection<BuyOption> buyOptions = new ArrayList<>();
+
+	@Transient
+	@JsonProperty(access = Access.WRITE_ONLY)
+	private Collection<ObjectId> options;
 
 	@JsonSerialize(using = ToStringSerializer.class)
 	public ObjectId getId() {
@@ -148,19 +153,19 @@ public class Deal implements Serializable {
 	}
 
 	public boolean addBuyOption(BuyOption element) {
-		if (this.buyOptions == null) {
-			this.buyOptions = new ArrayList<>(); // CollectionUtils.emptyCollection();
-		}
-
 		return this.buyOptions.add(element);
 	}
 
 	public boolean removeBuyOption(BuyOption element) {
-		if (this.buyOptions == null) {
-			this.buyOptions = new ArrayList<>(); // CollectionUtils.emptyCollection();
-		}
-
 		return this.buyOptions.remove(element);
+	}
+
+	public Collection<ObjectId> getOptions() {
+		return options;
+	}
+
+	public void setOptions(Collection<ObjectId> options) {
+		this.options = options;
 	}
 
 	@Override

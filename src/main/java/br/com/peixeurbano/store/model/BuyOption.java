@@ -16,8 +16,9 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 /**
  * BuyOptions Model
  * 
- * @author ryanpadilha
+ * @author Ryan Padilha <ryan.padilha@peixeurbano.com>
  * @version 0.1
+ * 
  */
 @Document(collection = "buy_option")
 public class BuyOption implements Serializable {
@@ -44,12 +45,10 @@ public class BuyOption implements Serializable {
 
 	@NotNull
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-//	@JsonSerialize(using = CustomDateTimeSerializer.class)
 	private Date startDate;
 
 	@NotNull
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-//	@JsonSerialize(using = CustomDateTimeSerializer.class)
 	private Date endDate;
 
 	@JsonSerialize(using = ToStringSerializer.class)

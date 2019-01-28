@@ -53,7 +53,7 @@ public class PurchaseServiceImpl implements PurchaseService {
 
 	@Override
 	public Purchase persist(Purchase purchase) throws UniqueConstraintException {
-		Purchase entity = null;
+		Purchase entity = new Purchase();
 
 		BuyOption boptCupom = boptService.decrementQuantityCupom(purchase.getBuyOptionId(), purchase.getQuantity());
 		if (null != boptCupom) {

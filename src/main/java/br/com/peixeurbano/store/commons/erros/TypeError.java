@@ -9,7 +9,7 @@ package br.com.peixeurbano.store.commons.erros;
  */
 public enum TypeError {
 
-	// @// @formatter:off
+	// @formatter:off
 	BAD_REQUEST_ERROR(400, "Bad request error"), 
 	METHOD_NOT_ALLOWED(405, "Request method not supported"),
 	UNSUPPORTED_MEDIA_TYPE(415, "Media type is not supported"), 

@@ -1,6 +1,7 @@
 package br.com.peixeurbano.store.service;
 
 import java.util.Collection;
+import java.util.Date;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.domain.Sort;
@@ -18,6 +19,8 @@ import br.com.peixeurbano.store.model.BuyOption;
 public interface BuyOptionService {
 
 	Collection<BuyOption> list(Sort sort);
+
+	Collection<BuyOption> findAllAvailable(Date start, Date end);
 
 	BuyOption findById(ObjectId id);
 

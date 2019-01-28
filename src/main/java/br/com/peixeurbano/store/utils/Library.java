@@ -4,6 +4,8 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.RandomStringUtils;
+
 /**
  * Library utility class
  * 
@@ -28,5 +30,13 @@ public class Library {
 			return request.getRemoteAddr();
 		}
 		return xfHeader.split(",")[0];
+	}
+
+	public static String generateString() {
+		int length = 7;
+		boolean useLetters = true;
+		boolean useNumbers = false;
+
+		return RandomStringUtils.random(length, useLetters, useNumbers);
 	}
 }

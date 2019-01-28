@@ -8,6 +8,13 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+/**
+ * Request Interceptor
+ * 
+ * @author Ryan Padilha <ryan.padilha@peixeurbano.com>
+ * @since 0.1
+ *
+ */
 @Component
 public class RequestInterceptor extends HandlerInterceptorAdapter {
 

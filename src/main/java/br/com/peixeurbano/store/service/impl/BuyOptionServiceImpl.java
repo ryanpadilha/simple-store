@@ -1,6 +1,7 @@
 package br.com.peixeurbano.store.service.impl;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.Optional;
 
 import org.bson.types.ObjectId;
@@ -25,9 +26,6 @@ public class BuyOptionServiceImpl implements BuyOptionService {
 
 	@Autowired
 	private BuyOptionRepository repository;
-
-//	@Autowired
-//	private ResourceMessage message;
 
 	@Override
 	public Collection<BuyOption> list(Sort sort) {
@@ -76,6 +74,11 @@ public class BuyOptionServiceImpl implements BuyOptionService {
 		}
 
 		return bopt;
+	}
+
+	@Override
+	public Collection<BuyOption> findAllAvailable(Date start, Date end) {
+		return repository.findAllByStartDateLessThanEqualAndEndDateGreaterThanEqual(start, end);
 	}
 
 }

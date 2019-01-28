@@ -1,6 +1,7 @@
 package br.com.peixeurbano.store.service;
 
 import java.util.Collection;
+import java.util.Date;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.domain.Sort;
@@ -19,7 +20,11 @@ public interface DealService {
 
 	Collection<Deal> list(Sort sort);
 
+	Collection<Deal> findAllAvailable(Date start, Date end);
+
 	Deal findById(ObjectId id);
+
+	Deal findByUrl(String url);
 
 	Deal persist(Deal deal) throws UniqueConstraintException;
 

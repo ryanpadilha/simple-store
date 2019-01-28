@@ -17,7 +17,7 @@ import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
  * The main class that contains the entry-point of the web application.<br>
  * This launches an embedded web server.
  * 
- * @author ryanpadilha <ryan.padilha@peixeurbano.com>
+ * @author Ryan Padilha <ryan.padilha@peixeurbano.com>
  * @version 0.1
  *
  */
