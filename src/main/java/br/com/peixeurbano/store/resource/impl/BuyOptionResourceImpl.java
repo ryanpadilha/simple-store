@@ -76,4 +76,9 @@ public class BuyOptionResourceImpl implements GenericResource<BuyOption> {
 		return service.findAllAvailable(currentDate, currentDate);
 	}
 
+	@RequestMapping(value = "/all-available-without-relation", method = RequestMethod.GET)
+	public Collection<BuyOption> findAllWithoutRelation() {
+		return service.findAllWithoutRelation();
+	}
+
 }

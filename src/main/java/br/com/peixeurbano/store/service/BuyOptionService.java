@@ -30,6 +30,8 @@ public interface BuyOptionService {
 
 	BuyOption decrementQuantityCupom(ObjectId id, Long quantity);
 
+	Collection<BuyOption> findAllWithoutRelation();
+
 	void delete(ObjectId id);
 
 	void validateConstraints(BuyOption buyOption) throws UniqueConstraintException;

@@ -11,7 +11,9 @@ import org.springframework.stereotype.Service;
 
 import br.com.peixeurbano.store.exceptions.UniqueConstraintException;
 import br.com.peixeurbano.store.model.BuyOption;
+import br.com.peixeurbano.store.model.Deal;
 import br.com.peixeurbano.store.repository.BuyOptionRepository;
+import br.com.peixeurbano.store.repository.DealRepository;
 import br.com.peixeurbano.store.service.BuyOptionService;
 
 /**
@@ -26,6 +28,9 @@ public class BuyOptionServiceImpl implements BuyOptionService {
 
 	@Autowired
 	private BuyOptionRepository repository;
+
+	@Autowired
+	private DealRepository dealRepository;
 
 	@Override
 	public Collection<BuyOption> list(Sort sort) {
@@ -79,6 +84,18 @@ public class BuyOptionServiceImpl implements BuyOptionService {
 	@Override
 	public Collection<BuyOption> findAllAvailable(Date start, Date end) {
 		return repository.findAllByStartDateLessThanEqualAndEndDateGreaterThanEqual(start, end);
+	}
+
+	@Override
+	public Collection<BuyOption> findAllWithoutRelation() {
+		final Collection<Deal> deals = dealRepository.findAll();
+		final Collection<BuyOption> options = repository.findAll();
+
+		for (Deal deal : deals) {
+			options.removeAll(deal.getBuyOptions());
+		}
+
+		return options;
 	}
 
 }
